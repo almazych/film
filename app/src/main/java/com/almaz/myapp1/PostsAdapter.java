@@ -11,9 +11,9 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    private List<PostModel> posts;
+    private List<PostModel.Result> posts;
 
-    public PostsAdapter(List<PostModel> posts) {
+    public PostsAdapter(List<PostModel.Result> posts) {
         this.posts = posts;
     }
 
@@ -25,9 +25,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PostModel post = posts.get(position);
-        holder.post.setText(post.getTotalResults());
-
+        PostModel.Result post = posts.get(position);
+        holder.post.setText(post.getTitle());
     }
 
     @Override
