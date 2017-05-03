@@ -31,13 +31,17 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+
+        PostsAdapter adapter = new PostsAdapter(posts);
+        recyclerView.setAdapter(adapter);
+
         App.getApi().getData(API_KEY, "ru-US", 1).enqueue(new Callback<List<PostModel>>() {
-            @Override
+            @Override  //Данные успешно пришли, но надо проверить response.body() на null
             public void onResponse(Call<List<PostModel>> call, Response<List<PostModel>> response) {
                 posts.addAll(response.body());
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
-            @Override
+            @Override //Произошла ошибка
             public void onFailure(Call<List<PostModel>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
