@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Log.d(TAG, response.errorBody().string());
                     } catch (IOException ioe){
+                        Log.d(TAG, ioe.getLocalizedMessage());
                     }
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
