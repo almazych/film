@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     post = response.body();
                     //
                     //      Как из объекта вытащить список?
-                    //
+                    //.
 
                 } else{
                     try {
