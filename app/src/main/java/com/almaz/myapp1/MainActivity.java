@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,28 +22,27 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "LogTag";
 
     RecyclerView recyclerView;
-    List<PostModel.Result> posts;
+    PostModel post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        posts = new ArrayList<>();
-
         recyclerView = (RecyclerView) findViewById(R.id.posts_recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
 
-        PostsAdapter adapter = new PostsAdapter(posts);
-        recyclerView.setAdapter(adapter);
-
-        App.getApi().getData(API_KEY, "ru-US", 1).enqueue(new Callback<List<PostModel.Result>>() {
-            @Override  //Данные успешно пришли, но надо проверить response.body() на null
-            public void onResponse(Call<List<PostModel.Result>> call, Response<List<PostModel.Result>> response) {
+        App.getApi().getData(API_KEY, "ru-US", 1).enqueue(new Callback<PostModel>() {
+            public void onResponse(Call<PostModel> call, Response<PostModel> response)  {
                 if(response.isSuccessful()) {
-                    posts.addAll(response.body());
+                    Log.d(TAG, "Status Code = " + response.code());
+                    post = response.body();
+                    //
+                    //      Как из объекта вытащить список?
+                    //
+
                 } else{
                     try {
                         Log.d(TAG, response.errorBody().string());
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
-            @Override //Произошла ошибка
-            public void onFailure(Call<List<PostModel.Result>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<PostModel> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
