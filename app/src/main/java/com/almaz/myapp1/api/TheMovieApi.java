@@ -10,5 +10,5 @@ import retrofit2.http.Query;
 public interface TheMovieApi {
 
     @GET("movie/popular")
-    Call<List<PostModel.Result>> getData(@Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int numPage);
+    Call<PostModel> getData(@Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int numPage);
 }
