@@ -15,11 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/imageView"
-        android:text="Здесь скорее всего будет title"
         android:textColor="?android:attr/textColorPrimary"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="название"/>
+
 
 
 </RelativeLayout>

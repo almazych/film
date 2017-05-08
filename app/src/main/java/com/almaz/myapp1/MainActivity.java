@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     PostsAdapter adapter;
     PostModel post;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
     }
 
 }
