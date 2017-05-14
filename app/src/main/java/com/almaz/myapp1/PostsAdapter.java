@@ -4,7 +4,6 @@ package com.almaz.myapp1;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,48 +12,36 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     Context context;
-    Film film;
 
-
-
-    private List<Result> mResults;
-
-    public PostsAdapter(List<Result> mResults) {
-        this.mResults = mResults;
+    public interface OnItemClickListener {
+        void onItemClick(Result item);
     }
 
+    private List<Result> mResults;
+    private OnItemClickListener listener;
+
+    public PostsAdapter(List<Result> mResults, OnItemClickListener listener) {
+        this.mResults = mResults;
+        this.listener = listener;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
         return new ViewHolder(v);
-
-
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)  {
-        Result result = mResults.get(position);
-
-        holder.result.setText(Html.fromHtml(result.getTitle()));
-
-        Picasso.with(context)
-                .load("https://image.tmdb.org/t/p/w185_and_h278_bestv2" + result.getPosterPath())
-                .into(holder.imagePos);
-
-
+        holder.bind(mResults.get(position), listener);
     }
 
     @Override
@@ -72,28 +59,43 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder{
         TextView result;
         ImageView imagePos;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
 
             result = (TextView) itemView.findViewById(R.id.item_post);
             imagePos = (ImageView) itemView.findViewById(R.id.imageView);
         }
 
+        public void bind(final Result item, final OnItemClickListener listener) {
+            result.setText(Html.fromHtml(item.getTitle()));
+            Picasso.with(context).load(swipe(item.getPosterPath())).into(imagePos);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+
+                }
+            });
+        }
+
+        public String swipe(String a){
+            return String.format("https://image.tmdb.org/t/p/w185_and_h278_bestv2%s",a); //Конкатенация url постера фильма
+        }
+/*
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
 
-                App.getApi().getFilm(mResults.get(position).getId(), MainActivity.API_KEY, "ru-US").enqueue(new Callback<Film>() {
+            App.getApi().getFilm(mResults.get(position).getId(), MainActivity.API_KEY, "ru-US").enqueue(new Callback<Film>() {
                     @Override
                     public void onResponse(Call<Film> call, Response<Film> response) {
                         if (response.isSuccessful()) {
                             Log.d("TAG", "Status Code = " + response.code());
                             film = response.body();
+
 
                         } else {
                             try {
@@ -109,7 +111,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 });
 
-        }
+        }*/
     }
 
 }

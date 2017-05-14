@@ -39,8 +39,13 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new PostsAdapter(new ArrayList<Result>());
+        adapter = new PostsAdapter(new ArrayList<Result>(), new PostsAdapter.OnItemClickListener() {
+            @Override public void onItemClick(Result item) {
+                Toast.makeText(getApplicationContext(), "Item Clicked", Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.setAdapter(adapter);
+
 
 
         App.getApi().getData(API_KEY, "ru-US", 1).enqueue(new Callback<PostModel>() {
