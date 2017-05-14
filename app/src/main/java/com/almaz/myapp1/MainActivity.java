@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    Film film;
 
     public static final String API_KEY = "1546eddf24e069a6848cd0c34766935f";
     public static final String TAG = "LogTag";
@@ -41,7 +41,27 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new PostsAdapter(new ArrayList<Result>(), new PostsAdapter.OnItemClickListener() {
             @Override public void onItemClick(Result item) {
-                Toast.makeText(getApplicationContext(), "Item Clicked", Toast.LENGTH_LONG).show();
+                App.getApi().getFilm(item.getId(), API_KEY, "ru-US").enqueue(new Callback<Film>() {
+                    @Override
+                    public void onResponse(Call<Film> call, Response<Film> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("TAG", "Status Code = " + response.code());
+                            film = response.body();
+
+
+                        } else {
+                            try {
+                                Log.d("TAG", response.errorBody().string());
+                            } catch (IOException ioe) {
+                                Log.d("TAG", ioe.getLocalizedMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Film> call, Throwable t) {
+                    }
+                });
             }
         });
         recyclerView.setAdapter(adapter);

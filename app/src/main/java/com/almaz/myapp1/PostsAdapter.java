@@ -84,34 +84,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public String swipe(String a){
             return String.format("https://image.tmdb.org/t/p/w185_and_h278_bestv2%s",a); //Конкатенация url постера фильма
         }
-/*
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-
-            App.getApi().getFilm(mResults.get(position).getId(), MainActivity.API_KEY, "ru-US").enqueue(new Callback<Film>() {
-                    @Override
-                    public void onResponse(Call<Film> call, Response<Film> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("TAG", "Status Code = " + response.code());
-                            film = response.body();
-
-
-                        } else {
-                            try {
-                                Log.d("TAG", response.errorBody().string());
-                            } catch (IOException ioe) {
-                                Log.d("TAG", ioe.getLocalizedMessage());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Film> call, Throwable t) {
-                    }
-                });
-
-        }*/
     }
 
 }
