@@ -72,11 +72,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         public void bind(final Result item, final OnItemClickListener listener) {
             result.setText(Html.fromHtml(item.getTitle()));
-            Picasso.with(context).load(swipe(item.getPosterPath())).into(imagePos);
+            Picasso.with(context)
+                    .load(swipe(item.getPosterPath()))
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(imagePos);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);
-
                 }
             });
         }
