@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                             i.putExtra(EXTRA_IMAGE,item.getPosterPath());
                             startActivity(i);
 
+
+
                         } else {
                             try {
                                 Log.d("TAG", response.errorBody().string());

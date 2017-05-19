@@ -1,6 +1,5 @@
 package com.almaz.myapp1;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,7 +15,7 @@ public class Film {
     private String backdropPath;
     @SerializedName("belongs_to_collection")
     @Expose
-    private String belongsToCollection;
+    private CollFilm belongsToCollection = null;
     @SerializedName("budget")
     @Expose
     private String budget;
@@ -100,11 +99,11 @@ public class Film {
         this.backdropPath = backdropPath;
     }
 
-    public String getBelongsToCollection() {
+    public CollFilm getBelongsToCollection() {
         return belongsToCollection;
     }
 
-    public void setBelongsToCollection(String belongsToCollection) {
+    public void setBelongsToCollection(CollFilm belongsToCollection) {
         this.belongsToCollection = belongsToCollection;
     }
 
