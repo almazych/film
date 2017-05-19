@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
@@ -60,14 +62,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        TextView result;
-        ImageView imagePos;
+
+        @BindView(R.id.item_post) TextView result;
+        @BindView(R.id.imageView) ImageView imagePos;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            result = (TextView) itemView.findViewById(R.id.item_post);
-            imagePos = (ImageView) itemView.findViewById(R.id.imageView);
+            ButterKnife.bind(this,itemView);
         }
 
         public void bind(final Result item, final OnItemClickListener listener) {
