@@ -1,6 +1,7 @@
 package com.almaz.myapp1;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Film> call, Throwable t) {}
                 });
-
-
             }
         });
         recyclerView.setAdapter(adapter);
@@ -90,4 +89,18 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<PostModel> call, Throwable t) {}
         });
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("LMKey", recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Parcelable recyclerViewLayoutState = savedInstanceState.getParcelable("LMKey");
+        recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewLayoutState);
+    }
+
 }

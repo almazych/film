@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/film_item"
@@ -25,6 +26,7 @@
         android:textStyle="bold"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/film_image"
+        android:layout_marginTop="5dp"
         android:textColor="?android:attr/textColorPrimary"/>
 
     <TextView
@@ -45,6 +47,6 @@
         android:textSize="15dp"
         android:layout_marginTop="5dp"/>
 
-
     </RelativeLayout>
+
 </ScrollView>
