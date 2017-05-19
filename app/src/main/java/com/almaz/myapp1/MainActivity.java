@@ -18,6 +18,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_TITLE = "com.almaz.myapp1.title_film";
+    public static final String EXTRA_OVERVIEW = "com.almaz.myapp1.overview_film";
     public static final String EXTRA_IMAGE = "com.almaz.myapp1.image_film";
     public static final String API_KEY = "1546eddf24e069a6848cd0c34766935f";
     public static final String TAG = "LogTag";
@@ -47,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
                             Intent i = new Intent(MainActivity.this, FilmActivity.class);
                             i.putExtra(EXTRA_TITLE,item.getTitle());
+                            i.putExtra(EXTRA_OVERVIEW,item.getOverview());
                             i.putExtra(EXTRA_IMAGE,item.getPosterPath());
                             startActivity(i);
-
-
 
                         } else {
                             try {
