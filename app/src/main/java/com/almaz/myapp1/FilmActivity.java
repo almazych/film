@@ -1,5 +1,6 @@
 package com.almaz.myapp1;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,7 +31,6 @@ public class FilmActivity extends AppCompatActivity {
                 .load(String.format("https://image.tmdb.org/t/p/w185_and_h278_bestv2%s",getIntent().getStringExtra(EXTRA_IMAGE)))
                 .placeholder(R.drawable.poster_fon)
                 .into(mImage);
-
 
     }
 
