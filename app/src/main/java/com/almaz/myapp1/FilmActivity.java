@@ -51,6 +51,7 @@ public class FilmActivity extends AppCompatActivity {
                     Picasso.with(FilmActivity.this)
                             .load(String.format("https://image.tmdb.org/t/p/w185_and_h278_bestv2%s",film.getPosterPath()))
                             .placeholder(R.drawable.poster_fon)
+                            .resize(200,300)
                             .into(mImage);
                 } else {
                     try {
