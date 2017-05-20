@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.posts_recycle_view);
         progressBar  = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
+        recyclerView = (RecyclerView) findViewById(R.id.posts_recycle_view);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -49,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
+
         App.getApi().getData(API_KEY, "ru-US", 1).enqueue(new Callback<PostModel>() {
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                progressBar.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Status Code = " + response.code());
                     post = response.body();
@@ -66,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PostModel> call, Throwable t) {}
-
+            public void onFailure(Call<PostModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+            }
 
         });
 
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
