@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,12 +28,16 @@ public class MainActivity extends AppCompatActivity {
     PostsAdapter adapter;
     PostModel post;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         recyclerView = (RecyclerView) findViewById(R.id.posts_recycle_view);
+        progressBar  = (ProgressBar) findViewById(R.id.progressBar);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -43,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
-
         App.getApi().getData(API_KEY, "ru-US", 1).enqueue(new Callback<PostModel>() {
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
                 if (response.isSuccessful()) {
@@ -62,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PostModel> call, Throwable t) {}
+
+
         });
+
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
