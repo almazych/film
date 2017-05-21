@@ -2,6 +2,7 @@ package com.almaz.myapp1;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class FilmActivity extends AppCompatActivity {
     @BindView(R.id.overview_film)
     TextView mOverView;
 
+    Toolbar toolbar;
     Film film;
 
 
@@ -37,6 +39,10 @@ public class FilmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.film_item);
         ButterKnife.bind(this);
+
+        toolbar = (Toolbar) findViewById(R.id.film_activity_toolbar);
+        toolbar.setTitle(getString(R.string.app_name));
+        setSupportActionBar(toolbar);
 
         App.getApi().getFilm(getIntent().getStringExtra(EXTRA_ID), API_KEY, "ru-US").enqueue(new Callback<Film>() {
             @Override
