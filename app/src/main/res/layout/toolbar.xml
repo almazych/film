@@ -6,5 +6,6 @@
     android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
+    android:gravity="center"
 
     />

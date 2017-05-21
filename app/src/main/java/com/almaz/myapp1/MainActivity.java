@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     PostsAdapter adapter;
     PostModel post;
+
+    Menu menu;
 
     ProgressBar progressBar;
     Toolbar toolbar;
@@ -97,6 +101,15 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         Parcelable recyclerViewLayoutState = savedInstanceState.getParcelable("LMKey");
         recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewLayoutState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        this.menu = menu;
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
