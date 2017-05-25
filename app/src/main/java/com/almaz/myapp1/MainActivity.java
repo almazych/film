@@ -1,5 +1,6 @@
     package com.almaz.myapp1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.FilmClicked {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +27,21 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Film
 
     @Override
     public void sendIdFilm(String filmId) {
-            FilmFragment frag = new FilmFragment();
-            frag.updateText(filmId);
 
+        Boolean tabletMode = findViewById(R.id.fragment_container) != null;
+
+        FilmFragment fragment = new FilmFragment();
+
+        if (tabletMode){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container,fragment)
+                    .commit();
+        } else {
+            Intent i = new Intent(this,FilmActivity.class);
+            startActivity(i);
+        }
+            fragment.updateText(filmId);
     }
 
 }
