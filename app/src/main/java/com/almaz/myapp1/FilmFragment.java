@@ -1,6 +1,5 @@
 package com.almaz.myapp1;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,32 +19,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.almaz.myapp1.MainActivity.API_KEY;
+
+import static com.almaz.myapp1.MainFragment.API_KEY;
 
 public class FilmFragment extends Fragment {
 
-    @BindView(R.id.film_name)
-    TextView mTitle;
-    @BindView(R.id.film_image)
-    ImageView mImage;
-    @BindView(R.id.overview_film)
-    TextView mOverView;
+    @BindView(R.id.film_name) TextView mTitle;
+    @BindView(R.id.film_image) ImageView mImage;
+    @BindView(R.id.overview_film) TextView mOverView;
 
     Film film;
     String filmId;
 
+    public void updateText(String text){
+        filmId=text;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-            filmId = getArguments().getString("filmId", "");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.film_fragment, container, false);
         ButterKnife.bind(getActivity());
-
-
 
         App.getApi().getFilm(filmId, API_KEY, "ru-US").enqueue(new Callback<Film>() {
             @Override
@@ -62,9 +60,6 @@ public class FilmFragment extends Fragment {
                             .placeholder(R.drawable.poster_fon)
                             .resize(200,300)
                             .into(mImage);
-
-
-
                 } else {
                     try {
                         Log.d("TAG", response.errorBody().string());
@@ -77,8 +72,6 @@ public class FilmFragment extends Fragment {
             @Override
             public void onFailure(Call<Film> call, Throwable t) {}
         });
-
-
 
         return view;
     }
