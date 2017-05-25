@@ -9,4 +9,5 @@
         android:layout_height="match_parent"
         android:id="@+id/posts_recycle_view"/>
 
+
 </LinearLayout>

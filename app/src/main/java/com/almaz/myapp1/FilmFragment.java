@@ -33,6 +33,7 @@ public class FilmFragment extends Fragment {
 
     public void updateText(String text){
         filmId=text;
+        Log.d("IDFILM", filmId);
     }
 
     @Override

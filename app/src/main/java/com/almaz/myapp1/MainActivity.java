@@ -19,9 +19,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Film
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_activity_toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-
-        ProgressBar progressBar  = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
     }
 
 
@@ -31,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Film
         Boolean tabletMode = findViewById(R.id.fragment_container) != null;
 
         FilmFragment fragment = new FilmFragment();
+        fragment.updateText(filmId);
 
         if (tabletMode){
             getSupportFragmentManager()
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Film
             Intent i = new Intent(this,FilmActivity.class);
             startActivity(i);
         }
-            fragment.updateText(filmId);
+
     }
 
 }
