@@ -16,17 +16,20 @@ public class FilmActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.film_activity_toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         FilmFragment fragment = new FilmFragment();
-        fragmentTransaction.add(R.id.film_container, fragment).commit();
 
         String f = getIntent().getStringExtra("IDFILM");
         Bundle arg = new Bundle();
         arg.putString("tag", f);
         fragment.setArguments(arg);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
+        fragmentTransaction.add(R.id.film_container, fragment).commit();
+
+
 
     }
 }

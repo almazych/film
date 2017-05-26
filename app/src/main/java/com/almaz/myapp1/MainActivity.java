@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Film
 
         if (tabletMode) {
             FilmFragment fragment = new FilmFragment();
-
+            Bundle arg = new Bundle();
+            arg.putString("tag", filmId);
+            fragment.setArguments(arg);
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container,fragment)
