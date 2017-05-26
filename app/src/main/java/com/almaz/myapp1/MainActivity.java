@@ -1,5 +1,7 @@
     package com.almaz.myapp1;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,8 +24,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Film
     public void onSendId(String filmId) {
         Boolean tabletMode = findViewById(R.id.fragment_container) != null;
 
-        FilmFragment fragment = new FilmFragment();
         if (tabletMode) {
+            FilmFragment fragment = new FilmFragment();
+
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container,fragment)

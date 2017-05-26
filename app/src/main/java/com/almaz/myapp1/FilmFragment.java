@@ -27,23 +27,22 @@ public class FilmFragment extends Fragment {
     @BindView(R.id.overview_film) TextView mOverView;
 
     Film film;
+    String filmId;
 
-
-    String recievInfo;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-         recievInfo = bundle.getString("tag");
+        filmId = bundle.getString("tag");
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.film_fragment, container, false);
-        ButterKnife.bind(getActivity());
+        ButterKnife.bind(this,view);
 
-        App.getApi().getFilm(recievInfo, "1546eddf24e069a6848cd0c34766935f", "ru-US").enqueue(new Callback<Film>() {
+        App.getApi().getFilm(filmId, "1546eddf24e069a6848cd0c34766935f", "ru-US").enqueue(new Callback<Film>() {
             @Override
             public void onResponse(Call<Film> call, Response<Film> response) {
                 if (response.isSuccessful()) {

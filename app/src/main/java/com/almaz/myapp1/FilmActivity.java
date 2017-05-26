@@ -28,7 +28,5 @@ public class FilmActivity extends AppCompatActivity {
         arg.putString("tag", f);
         fragment.setArguments(arg);
 
-
-
     }
 }
