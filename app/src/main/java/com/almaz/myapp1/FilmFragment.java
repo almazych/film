@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -29,6 +30,8 @@ public class FilmFragment extends Fragment {
     Film film;
     String filmId;
 
+    ProgressBar progressBar;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,13 +45,16 @@ public class FilmFragment extends Fragment {
         View view = inflater.inflate(R.layout.film_fragment, container, false);
         ButterKnife.bind(this,view);
 
+        progressBar  = (ProgressBar) view.findViewById(R.id.progressBar_film_fragment);
+        progressBar.setVisibility(View.VISIBLE);
+
         App.getApi().getFilm(filmId, "1546eddf24e069a6848cd0c34766935f", "ru-US").enqueue(new Callback<Film>() {
             @Override
             public void onResponse(Call<Film> call, Response<Film> response) {
                 if (response.isSuccessful()) {
                     Log.d("LogTag", "Status Code = " + response.code());
+                    progressBar.setVisibility(View.GONE);
                     film = response.body();
-
                     mTitle.setText(film.getTitle());
                     mOverView.setText(film.getOverview());
 
@@ -69,6 +75,7 @@ public class FilmFragment extends Fragment {
             @Override
             public void onFailure(Call<Film> call, Throwable t) {
                 Log.d("ONFAILURE", "Произошел фейл");
+                progressBar.setVisibility(View.GONE);
             }
         });
 

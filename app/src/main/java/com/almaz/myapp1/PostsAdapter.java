@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     Context context;
-
     public interface OnItemClickListener {
         void onItemClick(Result item);
     }

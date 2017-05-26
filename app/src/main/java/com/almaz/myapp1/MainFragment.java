@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,10 +29,12 @@ public class MainFragment extends Fragment {
     PostsAdapter adapter;
     PostModel post;
     FilmClicked mClicked;
+    ProgressBar progressBar;
 
 
     public interface FilmClicked {
-        public void onSendId(String filmId);
+        void onSendId(String filmId);
+        void onSendIdFirst(String firstId);
     }
 
     @Override
@@ -46,6 +50,9 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
+
+        progressBar  = (ProgressBar) view.findViewById(R.id.progressBar_main_fragment);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.posts_recycle_view);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL)); //добавляет разделители в списке
@@ -68,8 +75,11 @@ public class MainFragment extends Fragment {
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
                 if (response.isSuccessful()) {
                     Log.d("LogTag", "Status Code = " + response.code());
+                    progressBar.setVisibility(View.GONE);
                     post = response.body();
                     adapter.changeDataSet(post.getResults());
+                    mClicked.onSendIdFirst(post.getResults().get(0).getId());
+
                 } else {
                     try {
                         Log.d("LogTag", response.errorBody().string());
@@ -81,7 +91,9 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<PostModel> call, Throwable t) {}
+            public void onFailure(Call<PostModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+            }
         });
 
         return view;
