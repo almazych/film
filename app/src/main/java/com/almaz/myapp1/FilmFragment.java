@@ -1,7 +1,7 @@
 package com.almaz.myapp1;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +20,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-import static com.almaz.myapp1.MainFragment.API_KEY;
-
 public class FilmFragment extends Fragment {
 
     @BindView(R.id.film_name) TextView mTitle;
@@ -29,28 +27,27 @@ public class FilmFragment extends Fragment {
     @BindView(R.id.overview_film) TextView mOverView;
 
     Film film;
-    String filmId;
 
-    public void updateText(String text){
-        filmId=text;
-        Log.d("IDFILM", filmId);
-    }
 
+    String recievInfo;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+         recievInfo = bundle.getString("tag");
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.film_fragment, container, false);
         ButterKnife.bind(getActivity());
 
-        App.getApi().getFilm(filmId, API_KEY, "ru-US").enqueue(new Callback<Film>() {
+        App.getApi().getFilm(recievInfo, "1546eddf24e069a6848cd0c34766935f", "ru-US").enqueue(new Callback<Film>() {
             @Override
             public void onResponse(Call<Film> call, Response<Film> response) {
                 if (response.isSuccessful()) {
-                    Log.d("TAG", "Status Code = " + response.code());
+                    Log.d("LogTag", "Status Code = " + response.code());
                     film = response.body();
 
                     mTitle.setText(film.getTitle());
@@ -63,15 +60,17 @@ public class FilmFragment extends Fragment {
                             .into(mImage);
                 } else {
                     try {
-                        Log.d("TAG", response.errorBody().string());
+                        Log.d("LogTag", response.errorBody().string());
                     } catch (IOException ioe) {
-                        Log.d("TAG", ioe.getLocalizedMessage());
+                        Log.d("LogTag", ioe.getLocalizedMessage());
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<Film> call, Throwable t) {}
+            public void onFailure(Call<Film> call, Throwable t) {
+                Log.d("ONFAILURE", "Произошел фейл");
+            }
         });
 
         return view;

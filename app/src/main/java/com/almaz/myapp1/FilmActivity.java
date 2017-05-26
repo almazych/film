@@ -1,9 +1,8 @@
 package com.almaz.myapp1;
 
-
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,12 +17,18 @@ public class FilmActivity extends AppCompatActivity {
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         FilmFragment fragment = new FilmFragment();
         fragmentTransaction.add(R.id.film_container, fragment).commit();
+
+        String f = getIntent().getStringExtra("IDFILM");
+        Bundle arg = new Bundle();
+        arg.putString("tag", f);
+        fragment.setArguments(arg);
+
+
 
     }
 }
